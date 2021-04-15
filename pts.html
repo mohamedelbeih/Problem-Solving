@@ -1,0 +1,56 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+# In[203]:
+
+
+import itertools as it
+import math as m
+
+
+red_pts = [(1,-4),(-3,1),(3,3),(5,-1),(14,-8),(12,3),(8,-9),(-17,8),(0,17),(-2,20),(12,20),(9,16)]
+
+
+
+blue_pts = [(4,3),(0,0),(12,7),(14,-9),(5,5),(7,28),(14,21),(4,-12),(27,5)]
+
+
+
+combs = it.combinations(red_pts,3)
+combs = [z for z in combs]
+print(combs)
+
+
+
+angles_sum_around_point = []
+for i in range(len(blue_pts)):
+    for g in range(len(combs)):
+        V1 = [(combs[g][0][0]-blue_pts[i][0]),((combs[g][0][1]-blue_pts[i][1]))]
+        V2 = [(combs[g][1][0]-blue_pts[i][0]),((combs[g][1][1]-blue_pts[i][1]))]
+        V3 = [(combs[g][2][0]-blue_pts[i][0]),((combs[g][2][1]-blue_pts[i][1]))]
+        ang1 = (m.acos((V1[0]*V2[0]+V1[1]*V2[1])/((m.sqrt(V1[0]**2+V1[1]**2))*(m.sqrt(V2[0]**2+V2[1]**2)))))*180*7/22
+        ang2 = (m.acos((V2[0]*V3[0]+V2[1]*V3[1])/((m.sqrt(V2[0]**2+V2[1]**2))*(m.sqrt(V3[0]**2+V3[1]**2)))))*180*7/22
+        ang3 = (m.acos((V3[0]*V1[0]+V3[1]*V1[1])/((m.sqrt(V3[0]**2+V3[1]**2))*(m.sqrt(V1[0]**2+V1[1]**2)))))*180*7/22
+        angles_sum = round(ang1+ang2+ang3)
+        angles_sum_around_point.append(angles_sum)
+            
+print(angles_sum_around_point)
+    
+
+len(angles_sum_around_point)
+
+len(combs)*len(blue_pts)
+
+excluded_triangles = [x for x in angles_sum_around_point if x == 360]
+
+
+num_of_triangles = len(combs)-len(excluded_triangles)
+print('all triangles of red virtices = ',len(combs))
+print('all triangles of red virtices have blue pts inside = ',len(excluded_triangles))
+print('all triangles of red virtices have no blue pts inside = ',num_of_triangles)
+
+
+
+
+
+
